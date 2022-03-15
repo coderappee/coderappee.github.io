@@ -17,24 +17,35 @@
   <meta http-equiv="window-target" content="_top" />
   
   
-  <title>常用加密算法的应用 | Hexo</title>
-  <meta property="og:type" content="article">
-<meta property="og:title" content="常用加密算法的应用">
-<meta property="og:url" content="https://coderap.gitee.io/mathjax-test/index.html">
+  <title>从0到1成为Flink源码Contributor之环境搭建(1) | Hexo</title>
+  <meta name="description" content="前置要求 Java技术体系   Git版本管理使用 Maven依赖管理使用(官方建议使用版本3.2.5) Idea软件使用">
+<meta property="og:type" content="article">
+<meta property="og:title" content="从0到1成为Flink源码Contributor之环境搭建(1)">
+<meta property="og:url" content="https://coderappee.github.io/flink-in-depth/articles/flink-in-depth/1.flink-source-setup/index.html">
 <meta property="og:site_name" content="CodeRap">
+<meta property="og:description" content="前置要求 Java技术体系   Git版本管理使用 Maven依赖管理使用(官方建议使用版本3.2.5) Idea软件使用">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2019-05-20T05:58:36.000Z">
-<meta property="article:modified_time" content="2020-07-20T00:32:01.864Z">
+<meta property="og:image" content="http://coderap.gitee.io/blog-images/flink-in-depth/1-flink-in-depth-idea-import-view.png?0.0564687928748695">
+<meta property="og:image" content="http://coderap.gitee.io/blog-images/flink-in-depth/1-flink-top-pom-module-remove.png?0.6849825688650011">
+<meta property="og:image" content="http://coderap.gitee.io/blog-images/flink-in-depth/1-flink-connectors-pom-module-remove.png?0.5835459475868947">
+<meta property="og:image" content="http://coderap.gitee.io/blog-images/flink-in-depth/1-flink-connectors-sql-pom-module-remove.png?0.73388093854947">
+<meta property="og:image" content="http://coderap.gitee.io/blog-images/flink-in-depth/1-flink-version-batch-upgrade.png?0.9150609634872755">
+<meta property="og:image" content="http://coderap.gitee.io/blog-images/flink-in-depth/1-flink-version-custom-batch-upgrade.png?0.8339256667004487">
+<meta property="og:image" content="http://coderap.gitee.io/blog-images/flink-in-depth/1-flink-version-custom-batch-upgrade-after.png?0.9456642629417777">
+<meta property="og:image" content="http://coderap.gitee.io/blog-images/flink-in-depth/1-flink-custom-new-branch.png?0.7645566336919019">
+<meta property="og:image" content="http://coderap.gitee.io/blog-images/flink-in-depth/1-flink-idea-maven-import.png?0.0923636136791044">
+<meta property="og:image" content="http://coderap.gitee.io/blog-images/flink-in-depth/1-flink-custom-maven-build.png?0.5089108153975923">
+<meta property="og:image" content="http://coderap.gitee.io/blog-images/flink-in-depth/1-flink-custom-build-success.png?0.8971769140625185">
+<meta property="og:image" content="http://coderap.gitee.io/blog-images/flink-in-depth/1-flink-custom-build-bin-command.png?0.44819439451104626">
+<meta property="og:image" content="http://coderap.gitee.io/images/logo/public-wechat-qrcode-8.jpg">
+<meta property="article:published_time" content="2022-03-14T12:00:00.000Z">
+<meta property="article:modified_time" content="2022-03-15T22:54:42.000Z">
 <meta property="article:author" content="CodeRap">
-<meta property="article:tag" content="对称加密算法">
-<meta property="article:tag" content="非对称加密算法&#x2F;公钥算法">
-<meta property="article:tag" content="Hash函数&#x2F;散列函数&#x2F;摘要函数">
-<meta property="article:tag" content="消息认证">
-<meta property="article:tag" content="流密码">
-<meta property="article:tag" content="数字签名&#x2F;指纹&#x2F;消息摘要">
+<meta property="article:tag" content="Flink">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://coderap.gitee.io/blog-images/flink-in-depth/1-flink-in-depth-idea-import-view.png?0.0564687928748695">
   <!-- Canonical links -->
-  <link rel="canonical" href="https://coderap.gitee.io/mathjax-test/index.html">
+  <link rel="canonical" href="https://coderappee.github.io/flink-in-depth/articles/flink-in-depth/1.flink-source-setup/index.html">
   
   
     <link rel="icon" href="/favicon.png" type="image/x-icon">
@@ -184,7 +195,7 @@
   <div class="widget">
     <h3 class="widget-title">分类</h3>
     <div class="widget-body">
-      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AF%86%E7%A0%81%E5%AD%A6%E4%B8%8E%E4%BF%A1%E6%81%AF%E5%AE%89%E5%85%A8/">密码学与信息安全</a><span class="category-list-count">1</span></li></ul>
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Flink/">Flink</a><span class="category-list-count">1</span></li></ul>
     </div>
   </div>
 
@@ -194,7 +205,7 @@
   <div class="widget">
     <h3 class="widget-title">标签</h3>
     <div class="widget-body">
-      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hash%E5%87%BD%E6%95%B0-%E6%95%A3%E5%88%97%E5%87%BD%E6%95%B0-%E6%91%98%E8%A6%81%E5%87%BD%E6%95%B0/" rel="tag">Hash函数/散列函数/摘要函数</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%AF%B9%E7%A7%B0%E5%8A%A0%E5%AF%86%E7%AE%97%E6%B3%95/" rel="tag">对称加密算法</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%95%B0%E5%AD%97%E7%AD%BE%E5%90%8D-%E6%8C%87%E7%BA%B9-%E6%B6%88%E6%81%AF%E6%91%98%E8%A6%81/" rel="tag">数字签名/指纹/消息摘要</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%B5%81%E5%AF%86%E7%A0%81/" rel="tag">流密码</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%B6%88%E6%81%AF%E8%AE%A4%E8%AF%81/" rel="tag">消息认证</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%9D%9E%E5%AF%B9%E7%A7%B0%E5%8A%A0%E5%AF%86%E7%AE%97%E6%B3%95-%E5%85%AC%E9%92%A5%E7%AE%97%E6%B3%95/" rel="tag">非对称加密算法/公钥算法</a><span class="tag-list-count">1</span></li></ul>
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Flink/" rel="tag">Flink</a><span class="tag-list-count">1</span></li></ul>
     </div>
   </div>
 
@@ -204,7 +215,7 @@
   <div class="widget">
     <h3 class="widget-title">标签云</h3>
     <div class="widget-body tagcloud">
-      <a href="/tags/Hash%E5%87%BD%E6%95%B0-%E6%95%A3%E5%88%97%E5%87%BD%E6%95%B0-%E6%91%98%E8%A6%81%E5%87%BD%E6%95%B0/" style="font-size: 13px;">Hash函数/散列函数/摘要函数</a> <a href="/tags/%E5%AF%B9%E7%A7%B0%E5%8A%A0%E5%AF%86%E7%AE%97%E6%B3%95/" style="font-size: 13px;">对称加密算法</a> <a href="/tags/%E6%95%B0%E5%AD%97%E7%AD%BE%E5%90%8D-%E6%8C%87%E7%BA%B9-%E6%B6%88%E6%81%AF%E6%91%98%E8%A6%81/" style="font-size: 13px;">数字签名/指纹/消息摘要</a> <a href="/tags/%E6%B5%81%E5%AF%86%E7%A0%81/" style="font-size: 13px;">流密码</a> <a href="/tags/%E6%B6%88%E6%81%AF%E8%AE%A4%E8%AF%81/" style="font-size: 13px;">消息认证</a> <a href="/tags/%E9%9D%9E%E5%AF%B9%E7%A7%B0%E5%8A%A0%E5%AF%86%E7%AE%97%E6%B3%95-%E5%85%AC%E9%92%A5%E7%AE%97%E6%B3%95/" style="font-size: 13px;">非对称加密算法/公钥算法</a>
+      <a href="/tags/Flink/" style="font-size: 13px;">Flink</a>
     </div>
   </div>
 
@@ -213,7 +224,7 @@
   <div class="widget">
     <h3 class="widget-title">归档</h3>
     <div class="widget-body">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/12/">十二月 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/05/">五月 2019</a><span class="archive-list-count">1</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/03/">三月 2022</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/07/">七月 2020</a><span class="archive-list-count">1</span></li></ul>
     </div>
   </div>
 
@@ -229,13 +240,13 @@
             
             <div class="item-inner">
               <p class="item-category">
-                
+                <a class="category-link" href="/categories/Flink/">Flink</a>
               </p>
               <p class="item-title">
-                <a href="/about/" class="title">Hello World</a>
+                <a href="/flink-in-depth/articles/flink-in-depth/1.flink-source-setup/" class="title">从0到1成为Flink源码Contributor之环境搭建(1)</a>
               </p>
               <p class="item-date">
-                <time datetime="2020-12-08T23:03:13.000Z" itemprop="datePublished">2020-12-09</time>
+                <time datetime="2022-03-14T12:00:00.000Z" itemprop="datePublished">2022-03-14</time>
               </p>
             </div>
           </li>
@@ -244,13 +255,13 @@
             
             <div class="item-inner">
               <p class="item-category">
-                <a class="category-link" href="/categories/%E5%AF%86%E7%A0%81%E5%AD%A6%E4%B8%8E%E4%BF%A1%E6%81%AF%E5%AE%89%E5%85%A8/">密码学与信息安全</a>
+                
               </p>
               <p class="item-title">
-                <a href="/mathjax-test/" class="title">常用加密算法的应用</a>
+                <a href="/./about/" class="title">关于作者</a>
               </p>
               <p class="item-date">
-                <time datetime="2019-05-20T05:58:36.000Z" itemprop="datePublished">2019-05-20</time>
+                <time datetime="2020-07-18T12:00:00.000Z" itemprop="datePublished">2020-07-18</time>
               </p>
             </div>
           </li>
@@ -268,14 +279,14 @@
   
 <main class="main" role="main">
   <div class="content">
-  <article id="post-mathjax-test" class="article article-type-post" itemscope itemtype="http://schema.org/BlogPosting">
+  <article id="post-articles/flink-in-depth/1.flink-source-setup" class="article article-type-post" itemscope itemtype="http://schema.org/BlogPosting">
     
     <div class="article-header">
       
         
   
     <h1 class="article-title" itemprop="name">
-      常用加密算法的应用
+      从0到1成为Flink源码Contributor之环境搭建(1)
     </h1>
   
 
@@ -283,32 +294,66 @@
       <div class="article-meta">
         <span class="article-date">
     <i class="icon icon-calendar-check"></i>
-	<a href="/mathjax-test/" class="article-date">
-	  <time datetime="2019-05-20T05:58:36.000Z" itemprop="datePublished">2019-05-20</time>
+	<a href="/flink-in-depth/articles/flink-in-depth/1.flink-source-setup/" class="article-date">
+	  <time datetime="2022-03-14T12:00:00.000Z" itemprop="datePublished">2022-03-14</time>
 	</a>
 </span>
         
   <span class="article-category">
     <i class="icon icon-folder"></i>
-    <a class="article-category-link" href="/categories/%E5%AF%86%E7%A0%81%E5%AD%A6%E4%B8%8E%E4%BF%A1%E6%81%AF%E5%AE%89%E5%85%A8/">密码学与信息安全</a>
+    <a class="article-category-link" href="/categories/Flink/">Flink</a>
   </span>
 
         
   <span class="article-tag">
     <i class="icon icon-tags"></i>
-	<a class="article-tag-link" href="/tags/Hash%E5%87%BD%E6%95%B0-%E6%95%A3%E5%88%97%E5%87%BD%E6%95%B0-%E6%91%98%E8%A6%81%E5%87%BD%E6%95%B0/" rel="tag">Hash函数/散列函数/摘要函数</a>, <a class="article-tag-link" href="/tags/%E5%AF%B9%E7%A7%B0%E5%8A%A0%E5%AF%86%E7%AE%97%E6%B3%95/" rel="tag">对称加密算法</a>, <a class="article-tag-link" href="/tags/%E6%95%B0%E5%AD%97%E7%AD%BE%E5%90%8D-%E6%8C%87%E7%BA%B9-%E6%B6%88%E6%81%AF%E6%91%98%E8%A6%81/" rel="tag">数字签名/指纹/消息摘要</a>, <a class="article-tag-link" href="/tags/%E6%B5%81%E5%AF%86%E7%A0%81/" rel="tag">流密码</a>, <a class="article-tag-link" href="/tags/%E6%B6%88%E6%81%AF%E8%AE%A4%E8%AF%81/" rel="tag">消息认证</a>, <a class="article-tag-link" href="/tags/%E9%9D%9E%E5%AF%B9%E7%A7%B0%E5%8A%A0%E5%AF%86%E7%AE%97%E6%B3%95-%E5%85%AC%E9%92%A5%E7%AE%97%E6%B3%95/" rel="tag">非对称加密算法/公钥算法</a>
+	<a class="article-tag-link" href="/tags/Flink/" rel="tag">Flink</a>
   </span>
 
 
         
 
-        <span class="post-comment"><i class="icon icon-comment"></i> <a href="/mathjax-test/#comments" class="article-comment-link">评论</a></span>
+        <span class="post-comment"><i class="icon icon-comment"></i> <a href="/flink-in-depth/articles/flink-in-depth/1.flink-source-setup/#comments" class="article-comment-link">评论</a></span>
         
       </div>
     </div>
     <div class="article-entry marked-body" itemprop="articleBody">
       
-        
+        <h3 id="前置要求"><a href="#前置要求" class="headerlink" title="前置要求"></a>前置要求</h3><ul>
+<li>Java技术体系  </li>
+<li>Git版本管理使用</li>
+<li>Maven依赖管理使用(官方建议使用版本3.2.5)</li>
+<li>Idea软件使用</li>
+</ul>
+<h3 id="源码下载与Idea配置"><a href="#源码下载与Idea配置" class="headerlink" title="源码下载与Idea配置"></a>源码下载与Idea配置</h3><p>新建一个名为 flink-in-depth 的目录<br>使用cd命令进入到这个目录下，然后下载Flink的master分支源码</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">mkdir flink-in-depth</span><br><span class="line">cd flink-in-depth</span><br><span class="line">git clone https:&#x2F;&#x2F;github.com&#x2F;apache&#x2F;flink.git</span><br></pre></td></tr></table></figure>
+
+<p>源码下载完毕后，我们使用Idea打开 flink-in-depth 目录，即 flink 源码目录的上层目录<br><img src="http://coderap.gitee.io/blog-images/flink-in-depth/1-flink-in-depth-idea-import-view.png?0.0564687928748695" alt=""></p>
+<p>我们不用急着在Idea中导入源码，先进行一番配置也不迟<br>由于我们是想成为Flink源码核心的Contributor，所以我们是不需要对Flink源码目录下的所有子模块进行编译与处理的<br>这里我们移除 flink-end-to-end-tests、flink-fs-tests、flink-yarn-tests 顶层子模块，以及 flink-connectors、flink-filesystems、flink-fromats、flink-architecture-tests、flink-examples、flink-dist 下的部分子模块</p>
+<p>打开 Flink 下的顶层pom.xml，移除 flink-end-to-end-tests、flink-fs-tests、flink-yarn-tests<br><img src="http://coderap.gitee.io/blog-images/flink-in-depth/1-flink-top-pom-module-remove.png?0.6849825688650011" alt=""></p>
+<p>移除 flink-connectors 下的部分子模块，我们暂时就只保留 jdbc、kafka、hive、file 这些connector模块吧<br><img src="http://coderap.gitee.io/blog-images/flink-in-depth/1-flink-connectors-pom-module-remove.png?0.5835459475868947" alt=""><br><br/><br><img src="http://coderap.gitee.io/blog-images/flink-in-depth/1-flink-connectors-sql-pom-module-remove.png?0.73388093854947" alt=""></p>
+<p>同理 flink-filesystems、flink-formats、flink-architecture-tests、flink-examples、flink-dist 的相应子模块也需要移除，具体可以参考笔者的专用 github 地址</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">https:&#x2F;&#x2F;github.com&#x2F;coderappee&#x2F;flink-in-depth.git</span><br><span class="line">  </span><br><span class="line">https:&#x2F;&#x2F;github.com&#x2F;coderappee&#x2F;flink.git</span><br></pre></td></tr></table></figure>
+<p>其中 flink-architecture-tests 在移除子模块时，在 flink-architecture-tests 顶层pom里也把相应的connectors依赖去除<br>flink-dist 中需要把相应的 flink-filesystems 里依赖的模块移除掉，在进行 assembly 打包里也需要把相应移除的模块移除掉</p>
+<p>移除这些模块，除了加快编译外，主要还是减少对我们Flink源码核心开发的影响，这些都是扩展模块，对源码核心的开发是帮助不大的，后续我们在合并原Flink的repo代码时可以通过不合并或解决冲突的方式，不把我们对这些模块移除的修改合并到本地的相应的issue分支里</p>
+<p>除了移除模块，有时我们还看到Flink进行版本升级时，PMC或Committer会批量的升级Flink的版本<br><img src="http://coderap.gitee.io/blog-images/flink-in-depth/1-flink-version-batch-upgrade.png?0.9150609634872755" alt=""></p>
+<p>具体做法是打开idea的 run/debug configuration，并新建三条 maven 执行命令，我们就暂时把我们的版本命名为custom-test吧</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">用于对版本批量重命名:</span><br><span class="line">mvn versions:set -DnewVersion&#x3D;custom-test</span><br><span class="line">用于对版本批量重命名后提交:</span><br><span class="line">mvn versions:commit</span><br><span class="line">用于对版本批量重命名后回滚</span><br><span class="line">mvn versions:revert</span><br></pre></td></tr></table></figure>
+<p><img src="http://coderap.gitee.io/blog-images/flink-in-depth/1-flink-version-custom-batch-upgrade.png?0.8339256667004487" alt=""></p>
+<p>我们对自己的Flink版本进行批量重命名并提交之后就可以看到已经把没有移除模块的所有pom.xml的版本都命名为custom-test了<br><img src="http://coderap.gitee.io/blog-images/flink-in-depth/1-flink-version-custom-batch-upgrade-after.png?0.9456642629417777" alt=""></p>
+<p>由于笔者自己本地系统所持有的hadoop版本是2.7.3，所以笔者也把顶层的hadoop依赖修改为2.7.3，这点读者朋友们根据自己所持有的hadoop版本进行相应修改</p>
+<p>进行完上述修改后，我们也相应的把自己修改后的Flink版本给建个git分支，就叫做custom-test分支吧<br><img src="http://coderap.gitee.io/blog-images/flink-in-depth/1-flink-custom-new-branch.png?0.7645566336919019" alt=""></p>
+<h3 id="使用Idea的Maven功能导入源码并编译源码"><a href="#使用Idea的Maven功能导入源码并编译源码" class="headerlink" title="使用Idea的Maven功能导入源码并编译源码"></a>使用Idea的Maven功能导入源码并编译源码</h3><p>现在我们就可以使用Idea导入自建Flink版本源码了<br><img src="http://coderap.gitee.io/blog-images/flink-in-depth/1-flink-idea-maven-import.png?0.0923636136791044" alt=""></p>
+<p>然后新建maven命名并进行构建</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mvn clean install -DskipTests -Dfast -Dhadoop.version&#x3D;2.7.3</span><br></pre></td></tr></table></figure>
+<p><img src="http://coderap.gitee.io/blog-images/flink-in-depth/1-flink-custom-maven-build.png?0.5089108153975923" alt=""></p>
+<p>构建完成后就可以进行Flink源码的核心开发与调试<br><img src="http://coderap.gitee.io/blog-images/flink-in-depth/1-flink-custom-build-success.png?0.8971769140625185" alt=""></p>
+<p>可以看到构建完后在Flink源码的根目录下出现build-target，这就是我们平时从官网下载的发行版本的目录结构<br>我们可以基于build-target目录进行Flink应用的部署与提交，相应的命令也在bin目录里<br><img src="http://coderap.gitee.io/blog-images/flink-in-depth/1-flink-custom-build-bin-command.png?0.44819439451104626" alt=""></p>
+<br/>
+<center>欢迎大家关注</center>
+<center>
+<img src="http://coderap.gitee.io/images/logo/public-wechat-qrcode-8.jpg"/>
+</center>
       
     </div>
     <div class="article-footer">
@@ -317,7 +362,7 @@
     
     <li class="post-copyright-link hidden-xs">
       <strong>本文链接：</strong>
-      <a href="https://coderap.gitee.io/mathjax-test/" title="常用加密算法的应用" target="_blank" rel="external">https://coderap.gitee.io/mathjax-test/</a>
+      <a href="https://coderappee.github.io/flink-in-depth/articles/flink-in-depth/1.flink-source-setup/" title="从0到1成为Flink源码Contributor之环境搭建(1)" target="_blank" rel="external">https://coderappee.github.io/flink-in-depth/articles/flink-in-depth/1.flink-source-setup/</a>
     </li>
     
     <li class="post-copyright-license">
@@ -363,10 +408,10 @@
   
   <ul class="pager pull-left">
     
-    <li class="prev">
-      <a href="/about/" title="Hello World"><i class="icon icon-angle-left" aria-hidden="true"></i><span>&nbsp;&nbsp;上一篇</span></a>
-    </li>
     
+    <li class="next">
+      <a href="/./about/" title="关于作者"><span>下一篇&nbsp;&nbsp;</span><i class="icon icon-angle-right" aria-hidden="true"></i></a>
+    </li>
     
     
   </ul>
