@@ -17,35 +17,28 @@
   <meta http-equiv="window-target" content="_top" />
   
   
-  <title>从0到1成为Flink源码Contributor之环境搭建(1) | Hexo</title>
-  <meta name="description" content="前置要求 Java技术体系   Git版本管理使用 Maven依赖管理使用(官方建议使用版本3.2.5) Idea软件使用">
+  <title>从0到1成为Flink源码Contributor之自建版本HelloWorld测试(2) | Hexo</title>
+  <meta name="description" content="前置要求 Java技术体系 Junit单元测试 Maven依赖管理使用 Idea软件使用 Flink自建版本custom-test">
 <meta property="og:type" content="article">
-<meta property="og:title" content="从0到1成为Flink源码Contributor之环境搭建(1)">
-<meta property="og:url" content="https://coderap.gitee.io/flink-in-depth/articles/flink-in-depth/1.flink-source-setup/index.html">
+<meta property="og:title" content="从0到1成为Flink源码Contributor之自建版本HelloWorld测试(2)">
+<meta property="og:url" content="https://coderap.gitee.io/flink-in-depth/articles/flink-in-depth/2.flink-source-custom-test/index.html">
 <meta property="og:site_name" content="CodeRap">
-<meta property="og:description" content="前置要求 Java技术体系   Git版本管理使用 Maven依赖管理使用(官方建议使用版本3.2.5) Idea软件使用">
+<meta property="og:description" content="前置要求 Java技术体系 Junit单元测试 Maven依赖管理使用 Idea软件使用 Flink自建版本custom-test">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="http://coderap.gitee.io/blog-images/flink-in-depth/1-flink-in-depth-idea-import-view.png?0.0564687928748695">
-<meta property="og:image" content="http://coderap.gitee.io/blog-images/flink-in-depth/1-flink-top-pom-module-remove.png?0.6849825688650011">
-<meta property="og:image" content="http://coderap.gitee.io/blog-images/flink-in-depth/1-flink-connectors-pom-module-remove.png?0.5835459475868947">
-<meta property="og:image" content="http://coderap.gitee.io/blog-images/flink-in-depth/1-flink-connectors-sql-pom-module-remove.png?0.73388093854947">
-<meta property="og:image" content="http://coderap.gitee.io/blog-images/flink-in-depth/1-flink-version-batch-upgrade.png?0.9150609634872755">
-<meta property="og:image" content="http://coderap.gitee.io/blog-images/flink-in-depth/1-flink-version-custom-batch-upgrade.png?0.8339256667004487">
-<meta property="og:image" content="http://coderap.gitee.io/blog-images/flink-in-depth/1-flink-version-custom-batch-upgrade-after.png?0.9456642629417777">
-<meta property="og:image" content="http://coderap.gitee.io/blog-images/flink-in-depth/1-flink-custom-new-branch.png?0.7645566336919019">
-<meta property="og:image" content="http://coderap.gitee.io/blog-images/flink-in-depth/1-flink-idea-maven-import.png?0.0923636136791044">
-<meta property="og:image" content="http://coderap.gitee.io/blog-images/flink-in-depth/1-flink-custom-maven-build.png?0.5089108153975923">
-<meta property="og:image" content="http://coderap.gitee.io/blog-images/flink-in-depth/1-flink-custom-build-success.png?0.8971769140625185">
-<meta property="og:image" content="http://coderap.gitee.io/blog-images/flink-in-depth/1-flink-custom-build-bin-command.png?0.44819439451104626">
+<meta property="og:image" content="http://coderap.gitee.io/blog-images/flink-in-depth/2-flink-nc-open-8080.png?0.6555255389435986">
+<meta property="og:image" content="http://coderap.gitee.io/blog-images/flink-in-depth/2-flink-helloworld-test-runup.png?0.3318034293559209">
+<meta property="og:image" content="http://coderap.gitee.io/blog-images/flink-in-depth/2-flink-helloworld-flink-webui.png?0.8841030678986064">
+<meta property="og:image" content="http://coderap.gitee.io/blog-images/flink-in-depth/2-flink-custom-helloworld-flinkwebui-streamgraph.png?0.5274267427752113">
+<meta property="og:image" content="http://coderap.gitee.io/blog-images/flink-in-depth/2-flink-helloworld-input-output-data.png?0.58919321909442">
 <meta property="og:image" content="http://coderap.gitee.io/images/logo/public-wechat-qrcode-8.jpg">
-<meta property="article:published_time" content="2022-03-14T12:00:00.000Z">
-<meta property="article:modified_time" content="2022-03-15T22:54:42.000Z">
+<meta property="article:published_time" content="2022-03-15T12:00:00.000Z">
+<meta property="article:modified_time" content="2022-03-16T08:30:46.000Z">
 <meta property="article:author" content="CodeRap">
 <meta property="article:tag" content="Flink">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://coderap.gitee.io/blog-images/flink-in-depth/1-flink-in-depth-idea-import-view.png?0.0564687928748695">
+<meta name="twitter:image" content="http://coderap.gitee.io/blog-images/flink-in-depth/2-flink-nc-open-8080.png?0.6555255389435986">
   <!-- Canonical links -->
-  <link rel="canonical" href="https://coderap.gitee.io/flink-in-depth/articles/flink-in-depth/1.flink-source-setup/index.html">
+  <link rel="canonical" href="https://coderap.gitee.io/flink-in-depth/articles/flink-in-depth/2.flink-source-custom-test/index.html">
   
   
     <link rel="icon" href="/favicon.png" type="image/x-icon">
@@ -294,14 +287,14 @@
   
 <main class="main" role="main">
   <div class="content">
-  <article id="post-articles/flink-in-depth/1.flink-source-setup" class="article article-type-post" itemscope itemtype="http://schema.org/BlogPosting">
+  <article id="post-articles/flink-in-depth/2.flink-source-custom-test" class="article article-type-post" itemscope itemtype="http://schema.org/BlogPosting">
     
     <div class="article-header">
       
         
   
     <h1 class="article-title" itemprop="name">
-      从0到1成为Flink源码Contributor之环境搭建(1)
+      从0到1成为Flink源码Contributor之自建版本HelloWorld测试(2)
     </h1>
   
 
@@ -309,8 +302,8 @@
       <div class="article-meta">
         <span class="article-date">
     <i class="icon icon-calendar-check"></i>
-	<a href="/flink-in-depth/articles/flink-in-depth/1.flink-source-setup/" class="article-date">
-	  <time datetime="2022-03-14T12:00:00.000Z" itemprop="datePublished">2022-03-14</time>
+	<a href="/flink-in-depth/articles/flink-in-depth/2.flink-source-custom-test/" class="article-date">
+	  <time datetime="2022-03-15T12:00:00.000Z" itemprop="datePublished">2022-03-15</time>
 	</a>
 </span>
         
@@ -328,47 +321,48 @@
 
         
 
-        <span class="post-comment"><i class="icon icon-comment"></i> <a href="/flink-in-depth/articles/flink-in-depth/1.flink-source-setup/#comments" class="article-comment-link">评论</a></span>
+        <span class="post-comment"><i class="icon icon-comment"></i> <a href="/flink-in-depth/articles/flink-in-depth/2.flink-source-custom-test/#comments" class="article-comment-link">评论</a></span>
         
       </div>
     </div>
     <div class="article-entry marked-body" itemprop="articleBody">
       
         <h3 id="前置要求"><a href="#前置要求" class="headerlink" title="前置要求"></a>前置要求</h3><ul>
-<li>Java技术体系  </li>
-<li>Git版本管理使用</li>
-<li>Maven依赖管理使用(官方建议使用版本3.2.5)</li>
+<li>Java技术体系</li>
+<li>Junit单元测试</li>
+<li>Maven依赖管理使用</li>
 <li>Idea软件使用</li>
+<li>Flink自建版本custom-test</li>
 </ul>
-<h3 id="源码下载与Idea配置"><a href="#源码下载与Idea配置" class="headerlink" title="源码下载与Idea配置"></a>源码下载与Idea配置</h3><p>新建一个名为 flink-in-depth 的目录<br>使用cd命令进入到这个目录下，然后下载Flink的master分支源码</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">mkdir flink-in-depth</span><br><span class="line">cd flink-in-depth</span><br><span class="line">git clone https:&#x2F;&#x2F;github.com&#x2F;apache&#x2F;flink.git</span><br></pre></td></tr></table></figure>
-
-<p>源码下载完毕后，我们使用Idea打开 flink-in-depth 目录，即 flink 源码目录的上层目录<br><img src="http://coderap.gitee.io/blog-images/flink-in-depth/1-flink-in-depth-idea-import-view.png?0.0564687928748695" alt=""></p>
-<p>我们不用急着在Idea中导入源码，先进行一番配置也不迟<br>由于我们是想成为Flink源码核心的Contributor，所以我们是不需要对Flink源码目录下的所有子模块进行编译与处理的<br>这里我们移除 flink-end-to-end-tests、flink-fs-tests、flink-yarn-tests 顶层子模块，以及 flink-connectors、flink-filesystems、flink-fromats、flink-architecture-tests、flink-examples、flink-dist 下的部分子模块</p>
-<p>打开 Flink 下的顶层pom.xml，移除 flink-end-to-end-tests、flink-fs-tests、flink-yarn-tests<br><img src="http://coderap.gitee.io/blog-images/flink-in-depth/1-flink-top-pom-module-remove.png?0.6849825688650011" alt=""></p>
-<p>移除 flink-connectors 下的部分子模块，我们暂时就只保留 jdbc、kafka、hive、file 这些connector模块吧<br><img src="http://coderap.gitee.io/blog-images/flink-in-depth/1-flink-connectors-pom-module-remove.png?0.5835459475868947" alt=""><br><br/><br><img src="http://coderap.gitee.io/blog-images/flink-in-depth/1-flink-connectors-sql-pom-module-remove.png?0.73388093854947" alt=""></p>
-<p>同理 flink-filesystems、flink-formats、flink-architecture-tests、flink-examples、flink-dist 的相应子模块也需要移除，具体可以参考笔者的专用 github 地址</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">https:&#x2F;&#x2F;github.com&#x2F;coderappee&#x2F;flink-in-depth.git</span><br><span class="line">  </span><br><span class="line">https:&#x2F;&#x2F;github.com&#x2F;coderappee&#x2F;flink.git</span><br></pre></td></tr></table></figure>
-<p>其中 flink-architecture-tests 在移除子模块时，在 flink-architecture-tests 顶层pom里也把相应的connectors依赖去除<br>flink-dist 中需要把相应的 flink-filesystems 里依赖的模块移除掉，在进行 assembly 打包里也需要把相应移除的模块移除掉</p>
-<p>移除这些模块，除了加快编译外，主要还是减少对我们Flink源码核心开发的影响，这些都是扩展模块，对源码核心的开发是帮助不大的，后续我们在合并原Flink的repo代码时可以通过不合并或解决冲突的方式，不把我们对这些模块移除的修改合并到本地的相应的issue分支里</p>
-<p>除了移除模块，有时我们还看到Flink进行版本升级时，PMC或Committer会批量的升级Flink的版本<br><img src="http://coderap.gitee.io/blog-images/flink-in-depth/1-flink-version-batch-upgrade.png?0.9150609634872755" alt=""></p>
-<p>具体做法是打开idea的 run/debug configuration，并新建三条 maven 执行命令，我们就暂时把我们的版本命名为custom-test吧</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">用于对版本批量重命名:</span><br><span class="line">mvn versions:set -DnewVersion&#x3D;custom-test</span><br><span class="line">用于对版本批量重命名后提交:</span><br><span class="line">mvn versions:commit</span><br><span class="line">用于对版本批量重命名后回滚</span><br><span class="line">mvn versions:revert</span><br></pre></td></tr></table></figure>
-<p><img src="http://coderap.gitee.io/blog-images/flink-in-depth/1-flink-version-custom-batch-upgrade.png?0.8339256667004487" alt=""></p>
-<p>我们对自己的Flink版本进行批量重命名并提交之后就可以看到已经把没有移除模块的所有pom.xml的版本都命名为custom-test了<br><img src="http://coderap.gitee.io/blog-images/flink-in-depth/1-flink-version-custom-batch-upgrade-after.png?0.9456642629417777" alt=""></p>
-<p>由于笔者自己本地系统所持有的hadoop版本是2.7.3，所以笔者也把顶层的hadoop依赖修改为2.7.3，这点读者朋友们根据自己所持有的hadoop版本进行相应修改</p>
-<p>进行完上述修改后，我们也相应的把自己修改后的Flink版本给建个git分支，就叫做custom-test分支吧<br><img src="http://coderap.gitee.io/blog-images/flink-in-depth/1-flink-custom-new-branch.png?0.7645566336919019" alt=""></p>
-<h3 id="使用Idea的Maven功能导入源码并编译源码"><a href="#使用Idea的Maven功能导入源码并编译源码" class="headerlink" title="使用Idea的Maven功能导入源码并编译源码"></a>使用Idea的Maven功能导入源码并编译源码</h3><p>现在我们就可以使用Idea导入自建Flink版本源码了<br><img src="http://coderap.gitee.io/blog-images/flink-in-depth/1-flink-idea-maven-import.png?0.0923636136791044" alt=""></p>
-<p>然后新建maven命名并进行构建</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mvn clean install -DskipTests -Dfast -Dhadoop.version&#x3D;2.7.3</span><br></pre></td></tr></table></figure>
-<p><img src="http://coderap.gitee.io/blog-images/flink-in-depth/1-flink-custom-maven-build.png?0.5089108153975923" alt=""></p>
-<p>构建完成后就可以进行Flink源码的核心开发与调试<br><img src="http://coderap.gitee.io/blog-images/flink-in-depth/1-flink-custom-build-success.png?0.8971769140625185" alt=""></p>
-<p>可以看到构建完后在Flink源码的根目录下出现build-target，这就是我们平时从官网下载的发行版本的目录结构<br>我们可以基于build-target目录进行Flink应用的部署与提交，相应的命令也在bin目录里<br><img src="http://coderap.gitee.io/blog-images/flink-in-depth/1-flink-custom-build-bin-command.png?0.44819439451104626" alt=""></p>
+<p>关于Flink版本自建可以参考上一篇文章</p>
+<h3 id="新建flink-test项目测试自建Flink"><a href="#新建flink-test项目测试自建Flink" class="headerlink" title="新建flink-test项目测试自建Flink"></a>新建flink-test项目测试自建Flink</h3><p>在 flink-in-depth 目录下新建一个 flink-test 目录，并添加 pom.xml 文件，添加自建Flink的custom-test版本依赖</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br></pre></td><td class="code"><pre><span class="line">&lt;properties&gt;</span><br><span class="line">    &lt;project.build.sourceEncoding&gt;UTF-8&lt;&#x2F;project.build.sourceEncoding&gt;</span><br><span class="line">    &lt;project.reporting.outputEncoding&gt;UTF-8&lt;&#x2F;project.reporting.outputEncoding&gt;</span><br><span class="line">    &lt;java.version&gt;1.8&lt;&#x2F;java.version&gt;</span><br><span class="line">    &lt;maven.compiler.source&gt;1.8&lt;&#x2F;maven.compiler.source&gt;</span><br><span class="line">    &lt;maven.compiler.target&gt;1.8&lt;&#x2F;maven.compiler.target&gt;</span><br><span class="line">    &lt;encoding&gt;UTF-8&lt;&#x2F;encoding&gt;</span><br><span class="line">    &lt;flink.version&gt;custom-test&lt;&#x2F;flink.version&gt;</span><br><span class="line">    &lt;scala.version&gt;2.12.7&lt;&#x2F;scala.version&gt;</span><br><span class="line">    &lt;scala.binary.version&gt;2.12&lt;&#x2F;scala.binary.version&gt;</span><br><span class="line">    &lt;calcite.version&gt;1.26.0&lt;&#x2F;calcite.version&gt;</span><br><span class="line">    &lt;hadoop.version&gt;2.7.3&lt;&#x2F;hadoop.version&gt;</span><br><span class="line">&lt;&#x2F;properties&gt;</span><br><span class="line">  </span><br><span class="line">&lt;dependencies&gt;</span><br><span class="line">    &lt;dependency&gt;</span><br><span class="line">        &lt;groupId&gt;junit&lt;&#x2F;groupId&gt;</span><br><span class="line">        &lt;artifactId&gt;junit&lt;&#x2F;artifactId&gt;</span><br><span class="line">        &lt;version&gt;4.12&lt;&#x2F;version&gt;</span><br><span class="line">        &lt;!--&lt;scope&gt;test&lt;&#x2F;scope&gt;--&gt;</span><br><span class="line">    &lt;&#x2F;dependency&gt;</span><br><span class="line">    &lt;dependency&gt;</span><br><span class="line">        &lt;groupId&gt;org.projectlombok&lt;&#x2F;groupId&gt;</span><br><span class="line">        &lt;artifactId&gt;lombok&lt;&#x2F;artifactId&gt;</span><br><span class="line">        &lt;version&gt;1.16.22&lt;&#x2F;version&gt;</span><br><span class="line">        &lt;scope&gt;provided&lt;&#x2F;scope&gt;</span><br><span class="line">    &lt;&#x2F;dependency&gt;</span><br><span class="line">  </span><br><span class="line">    &lt;dependency&gt;</span><br><span class="line">        &lt;groupId&gt;org.scala-lang&lt;&#x2F;groupId&gt;</span><br><span class="line">        &lt;artifactId&gt;scala-library&lt;&#x2F;artifactId&gt;</span><br><span class="line">        &lt;version&gt;$&#123;scala.version&#125;&lt;&#x2F;version&gt;</span><br><span class="line">    &lt;&#x2F;dependency&gt;</span><br><span class="line">  </span><br><span class="line">    &lt;dependency&gt;</span><br><span class="line">        &lt;groupId&gt;org.apache.flink&lt;&#x2F;groupId&gt;</span><br><span class="line">        &lt;artifactId&gt;flink-clients&lt;&#x2F;artifactId&gt;</span><br><span class="line">        &lt;version&gt;$&#123;flink.version&#125;&lt;&#x2F;version&gt;</span><br><span class="line">        &lt;!--&lt;scope&gt;provided&lt;&#x2F;scope&gt;--&gt;</span><br><span class="line">    &lt;&#x2F;dependency&gt;</span><br><span class="line">  </span><br><span class="line">    &lt;dependency&gt;</span><br><span class="line">        &lt;groupId&gt;org.apache.flink&lt;&#x2F;groupId&gt;</span><br><span class="line">        &lt;artifactId&gt;flink-runtime&lt;&#x2F;artifactId&gt;</span><br><span class="line">        &lt;version&gt;$&#123;flink.version&#125;&lt;&#x2F;version&gt;</span><br><span class="line">        &lt;!--&lt;scope&gt;provided&lt;&#x2F;scope&gt;--&gt;</span><br><span class="line">    &lt;&#x2F;dependency&gt;</span><br><span class="line">  </span><br><span class="line">    &lt;dependency&gt;</span><br><span class="line">        &lt;groupId&gt;org.apache.flink&lt;&#x2F;groupId&gt;</span><br><span class="line">        &lt;artifactId&gt;flink-runtime-web&lt;&#x2F;artifactId&gt;</span><br><span class="line">        &lt;version&gt;$&#123;flink.version&#125;&lt;&#x2F;version&gt;</span><br><span class="line">        &lt;!--&lt;scope&gt;provided&lt;&#x2F;scope&gt;--&gt;</span><br><span class="line">    &lt;&#x2F;dependency&gt;</span><br><span class="line">&lt;dependencies&gt;</span><br></pre></td></tr></table></figure>
+<p>除了添加Flink依赖之外，我们还添加了junit单元测试、lombok快捷工具、scala语言包</p>
+<p>下面就开始我们的Flink自建版本本地Local MiniCluster的单元测试吧<br>新建一个名为FlinkFrameworkTest的Java类，然后添加如下代码:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">private static final StreamExecutionEnvironment streamExecutionEnvironment;</span><br><span class="line">  </span><br><span class="line">static &#123;</span><br><span class="line">    Configuration configuration &#x3D; new Configuration();</span><br><span class="line">    configuration.set(CoreOptions.DEFAULT_PARALLELISM, 1);</span><br><span class="line">    configuration.setInteger(ConfigConstants.LOCAL_NUMBER_TASK_MANAGER, 1);</span><br><span class="line">    configuration.set(TaskManagerOptions.NUM_TASK_SLOTS, 1);</span><br><span class="line">  </span><br><span class="line">    streamExecutionEnvironment &#x3D; StreamExecutionEnvironment.createLocalEnvironmentWithWebUI(configuration);</span><br><span class="line">&#125;</span><br><span class="line">  </span><br><span class="line">@Test</span><br><span class="line">public void testFlinkHelloWorld() throws Exception &#123;</span><br><span class="line">    DataStreamSource&lt;String&gt; lines &#x3D; streamExecutionEnvironment.socketTextStream(&quot;localhost&quot;, 8080);</span><br><span class="line">    lines.print();</span><br><span class="line">  </span><br><span class="line">    streamExecutionEnvironment.execute();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>HelloWorld程序很简单，使用静态代码块创建Flink的流式执行环境StreamExecutionEnvironment，然后从本地的8080网络端口读取Socket链接数据并进行输出，最后是使用执行环境执行流式应用程序<br>其中执行环境我们通过Configuration类配置了只有一个并行度，一个TaskManager，每个TaskManager只有一个Slot<br>由于我们使用了带有Flink WebUI的流式执行环境，所以需要 flink-runtime-web 依赖</p>
+<p>由以上的HelloWorld可以看出，Flink的流式应用编程三步曲</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">1) 创建流式执行环境StreamExecutionEnvironment</span><br><span class="line">2) 基于StreamExecutionEnvironment执行环境进行DataStream的算子操作(包括Source、Transformation、Sink)</span><br><span class="line">3) 使用StreamExecutionEnvironment执行环境执行程序</span><br></pre></td></tr></table></figure>
+<p>本例子中只有Source与Sink，其实Source与Sink操作本质也是Transaformation操作，但更多与外部系统或集合交互</p>
+<p>接下来我们运行一下HelloWorld例子<br>先通过nc程序打开8080网络端口</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nc -lk 8080</span><br></pre></td></tr></table></figure>
+<p><img src="http://coderap.gitee.io/blog-images/flink-in-depth/2-flink-nc-open-8080.png?0.6555255389435986" alt=""></p>
+<p>然后点击单元测试运行HelloWorld单元测试<br><img src="http://coderap.gitee.io/blog-images/flink-in-depth/2-flink-helloworld-test-runup.png?0.3318034293559209" alt=""><br>可以看到我们的HelloWorld已经创建了本地Local MiniCluster集群并运行了起来</p>
+<p>通过浏览器找开 <a href="http://localhost:8081" target="_blank" rel="noopener">http://localhost:8081</a> 页面(8081端口是Flink WebUI的默认端口)<br><img src="http://coderap.gitee.io/blog-images/flink-in-depth/2-flink-helloworld-flink-webui.png?0.8841030678986064" alt=""><br>从Flink WebUI概览图上，我们可以看出目前集群的配置是只有一个TaskManager，只有一个Slot，与我们代码里Configuration的配置一致，同时只有一个Job在运行，就是我们的HelloWorld程序，这个程序使用了默认的名称，叫做Flink Streaming Job</p>
+<p>我们点击 Flink Streaming Job 这个程序名称，就可以打开正在运行的HelloWorld的算子流图<br><img src="http://coderap.gitee.io/blog-images/flink-in-depth/2-flink-custom-helloworld-flinkwebui-streamgraph.png?0.5274267427752113" alt=""><br>从流图中我们可以看出目前有一个Souce为Socket Stream，一个Sink为Print to Std. Out，与我们的代码一致</p>
+<p>我们通过nc程序输入数据看一下效果<br><img src="http://coderap.gitee.io/blog-images/flink-in-depth/2-flink-helloworld-input-output-data.png?0.58919321909442" alt=""><br>我们输入什么控制台上就输出什么</p>
+<p>以上就是我们使用自建Flink版本进行的HelloWorld流式程序测试</p>
 <br/>
 <center>欢迎大家关注</center>
 <center>
 <img src="http://coderap.gitee.io/images/logo/public-wechat-qrcode-8.jpg"/>
 </center>
+
+
+
+
+
+
       
     </div>
     <div class="article-footer">
@@ -377,7 +371,7 @@
     
     <li class="post-copyright-link hidden-xs">
       <strong>本文链接：</strong>
-      <a href="https://coderap.gitee.io/flink-in-depth/articles/flink-in-depth/1.flink-source-setup/" title="从0到1成为Flink源码Contributor之环境搭建(1)" target="_blank" rel="external">https://coderap.gitee.io/flink-in-depth/articles/flink-in-depth/1.flink-source-setup/</a>
+      <a href="https://coderap.gitee.io/flink-in-depth/articles/flink-in-depth/2.flink-source-custom-test/" title="从0到1成为Flink源码Contributor之自建版本HelloWorld测试(2)" target="_blank" rel="external">https://coderap.gitee.io/flink-in-depth/articles/flink-in-depth/2.flink-source-custom-test/</a>
     </li>
     
     <li class="post-copyright-license">
@@ -423,13 +417,9 @@
   
   <ul class="pager pull-left">
     
-    <li class="prev">
-      <a href="/flink-in-depth/articles/flink-in-depth/2.flink-source-custom-test/" title="从0到1成为Flink源码Contributor之自建版本HelloWorld测试(2)"><i class="icon icon-angle-left" aria-hidden="true"></i><span>&nbsp;&nbsp;上一篇</span></a>
-    </li>
-    
     
     <li class="next">
-      <a href="/./about/" title="关于作者"><span>下一篇&nbsp;&nbsp;</span><i class="icon icon-angle-right" aria-hidden="true"></i></a>
+      <a href="/flink-in-depth/articles/flink-in-depth/1.flink-source-setup/" title="从0到1成为Flink源码Contributor之环境搭建(1)"><span>下一篇&nbsp;&nbsp;</span><i class="icon icon-angle-right" aria-hidden="true"></i></a>
     </li>
     
     
