@@ -17,28 +17,27 @@
   <meta http-equiv="window-target" content="_top" />
   
   
-  <title>从0到1成为Flink源码Contributor之自建版本HelloWorld测试(2) | Hexo</title>
-  <meta name="description" content="前置要求 Java技术体系 Junit单元测试 Maven依赖管理使用 Idea软件使用 Flink自建版本custom-test">
+  <title>从0到1成为Flink源码Contributor之Flink编程模型(3) | Hexo</title>
+  <meta name="description" content="前置要求 Java技术体系 Junit单元测试 Idea软件使用 Flink自建版本custom-test">
 <meta property="og:type" content="article">
-<meta property="og:title" content="从0到1成为Flink源码Contributor之自建版本HelloWorld测试(2)">
-<meta property="og:url" content="https://coderap.gitee.io/flink-in-depth/articles/flink-in-depth/2.flink-source-custom-test/index.html">
+<meta property="og:title" content="从0到1成为Flink源码Contributor之Flink编程模型(3)">
+<meta property="og:url" content="https://coderap.gitee.io/flink-in-depth/articles/flink-in-depth/3.flink-programming-model/index.html">
 <meta property="og:site_name" content="CodeRap">
-<meta property="og:description" content="前置要求 Java技术体系 Junit单元测试 Maven依赖管理使用 Idea软件使用 Flink自建版本custom-test">
+<meta property="og:description" content="前置要求 Java技术体系 Junit单元测试 Idea软件使用 Flink自建版本custom-test">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="http://coderap.gitee.io/blog-images/flink-in-depth/2-flink-nc-open-8080.png?0.6555255389435986">
-<meta property="og:image" content="http://coderap.gitee.io/blog-images/flink-in-depth/2-flink-helloworld-test-runup.png?0.3318034293559209">
-<meta property="og:image" content="http://coderap.gitee.io/blog-images/flink-in-depth/2-flink-helloworld-flink-webui.png?0.8841030678986064">
-<meta property="og:image" content="http://coderap.gitee.io/blog-images/flink-in-depth/2-flink-custom-helloworld-flinkwebui-streamgraph.png?0.5274267427752113">
-<meta property="og:image" content="http://coderap.gitee.io/blog-images/flink-in-depth/2-flink-helloworld-input-output-data.png?0.58919321909442">
+<meta property="og:image" content="http://coderap.gitee.io/blog-images/flink-in-depth/3-flink-helloworld-mapfunction-webui-streamgraph.png?0.9082776159939208">
+<meta property="og:image" content="http://coderap.gitee.io/blog-images/flink-in-depth/3-flink-programming-model-official.png?0.460597799090704">
+<meta property="og:image" content="http://coderap.gitee.io/blog-images/flink-in-depth/3-flink-sink-api.png?0.5825320520921318">
+<meta property="og:image" content="http://coderap.gitee.io/blog-images/flink-in-depth/3-flink-flatmap-operation.png?0.8669739054660035">
 <meta property="og:image" content="http://coderap.gitee.io/images/logo/public-wechat-qrcode-8.jpg">
-<meta property="article:published_time" content="2022-03-15T12:00:00.000Z">
-<meta property="article:modified_time" content="2022-03-16T08:30:46.000Z">
+<meta property="article:published_time" content="2022-03-16T12:00:00.000Z">
+<meta property="article:modified_time" content="2022-03-19T14:31:42.000Z">
 <meta property="article:author" content="CodeRap">
 <meta property="article:tag" content="Flink">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://coderap.gitee.io/blog-images/flink-in-depth/2-flink-nc-open-8080.png?0.6555255389435986">
+<meta name="twitter:image" content="http://coderap.gitee.io/blog-images/flink-in-depth/3-flink-helloworld-mapfunction-webui-streamgraph.png?0.9082776159939208">
   <!-- Canonical links -->
-  <link rel="canonical" href="https://coderap.gitee.io/flink-in-depth/articles/flink-in-depth/2.flink-source-custom-test/index.html">
+  <link rel="canonical" href="https://coderap.gitee.io/flink-in-depth/articles/flink-in-depth/3.flink-programming-model/index.html">
   
   
     <link rel="icon" href="/favicon.png" type="image/x-icon">
@@ -302,14 +301,14 @@
   
 <main class="main" role="main">
   <div class="content">
-  <article id="post-articles/flink-in-depth/2.flink-source-custom-test" class="article article-type-post" itemscope itemtype="http://schema.org/BlogPosting">
+  <article id="post-articles/flink-in-depth/3.flink-programming-model" class="article article-type-post" itemscope itemtype="http://schema.org/BlogPosting">
     
     <div class="article-header">
       
         
   
     <h1 class="article-title" itemprop="name">
-      从0到1成为Flink源码Contributor之自建版本HelloWorld测试(2)
+      从0到1成为Flink源码Contributor之Flink编程模型(3)
     </h1>
   
 
@@ -317,8 +316,8 @@
       <div class="article-meta">
         <span class="article-date">
     <i class="icon icon-calendar-check"></i>
-	<a href="/flink-in-depth/articles/flink-in-depth/2.flink-source-custom-test/" class="article-date">
-	  <time datetime="2022-03-15T12:00:00.000Z" itemprop="datePublished">2022-03-15</time>
+	<a href="/flink-in-depth/articles/flink-in-depth/3.flink-programming-model/" class="article-date">
+	  <time datetime="2022-03-16T12:00:00.000Z" itemprop="datePublished">2022-03-16</time>
 	</a>
 </span>
         
@@ -336,7 +335,7 @@
 
         
 
-        <span class="post-comment"><i class="icon icon-comment"></i> <a href="/flink-in-depth/articles/flink-in-depth/2.flink-source-custom-test/#comments" class="article-comment-link">评论</a></span>
+        <span class="post-comment"><i class="icon icon-comment"></i> <a href="/flink-in-depth/articles/flink-in-depth/3.flink-programming-model/#comments" class="article-comment-link">评论</a></span>
         
       </div>
     </div>
@@ -345,37 +344,36 @@
         <h3 id="前置要求"><a href="#前置要求" class="headerlink" title="前置要求"></a>前置要求</h3><ul>
 <li>Java技术体系</li>
 <li>Junit单元测试</li>
-<li>Maven依赖管理使用</li>
 <li>Idea软件使用</li>
 <li>Flink自建版本custom-test</li>
 </ul>
-<p>关于Flink版本自建可以参考上一篇文章</p>
-<h3 id="新建flink-test项目测试自建Flink"><a href="#新建flink-test项目测试自建Flink" class="headerlink" title="新建flink-test项目测试自建Flink"></a>新建flink-test项目测试自建Flink</h3><p>在 flink-in-depth 目录下新建一个 flink-test 目录，并添加 pom.xml 文件，添加自建Flink的custom-test版本依赖</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br></pre></td><td class="code"><pre><span class="line">&lt;properties&gt;</span><br><span class="line">    &lt;project.build.sourceEncoding&gt;UTF-8&lt;&#x2F;project.build.sourceEncoding&gt;</span><br><span class="line">    &lt;project.reporting.outputEncoding&gt;UTF-8&lt;&#x2F;project.reporting.outputEncoding&gt;</span><br><span class="line">    &lt;java.version&gt;1.8&lt;&#x2F;java.version&gt;</span><br><span class="line">    &lt;maven.compiler.source&gt;1.8&lt;&#x2F;maven.compiler.source&gt;</span><br><span class="line">    &lt;maven.compiler.target&gt;1.8&lt;&#x2F;maven.compiler.target&gt;</span><br><span class="line">    &lt;encoding&gt;UTF-8&lt;&#x2F;encoding&gt;</span><br><span class="line">    &lt;flink.version&gt;custom-test&lt;&#x2F;flink.version&gt;</span><br><span class="line">    &lt;scala.version&gt;2.12.7&lt;&#x2F;scala.version&gt;</span><br><span class="line">    &lt;scala.binary.version&gt;2.12&lt;&#x2F;scala.binary.version&gt;</span><br><span class="line">    &lt;calcite.version&gt;1.26.0&lt;&#x2F;calcite.version&gt;</span><br><span class="line">    &lt;hadoop.version&gt;2.7.3&lt;&#x2F;hadoop.version&gt;</span><br><span class="line">&lt;&#x2F;properties&gt;</span><br><span class="line">  </span><br><span class="line">&lt;dependencies&gt;</span><br><span class="line">    &lt;dependency&gt;</span><br><span class="line">        &lt;groupId&gt;junit&lt;&#x2F;groupId&gt;</span><br><span class="line">        &lt;artifactId&gt;junit&lt;&#x2F;artifactId&gt;</span><br><span class="line">        &lt;version&gt;4.12&lt;&#x2F;version&gt;</span><br><span class="line">        &lt;!--&lt;scope&gt;test&lt;&#x2F;scope&gt;--&gt;</span><br><span class="line">    &lt;&#x2F;dependency&gt;</span><br><span class="line">    &lt;dependency&gt;</span><br><span class="line">        &lt;groupId&gt;org.projectlombok&lt;&#x2F;groupId&gt;</span><br><span class="line">        &lt;artifactId&gt;lombok&lt;&#x2F;artifactId&gt;</span><br><span class="line">        &lt;version&gt;1.16.22&lt;&#x2F;version&gt;</span><br><span class="line">        &lt;scope&gt;provided&lt;&#x2F;scope&gt;</span><br><span class="line">    &lt;&#x2F;dependency&gt;</span><br><span class="line">  </span><br><span class="line">    &lt;dependency&gt;</span><br><span class="line">        &lt;groupId&gt;org.scala-lang&lt;&#x2F;groupId&gt;</span><br><span class="line">        &lt;artifactId&gt;scala-library&lt;&#x2F;artifactId&gt;</span><br><span class="line">        &lt;version&gt;$&#123;scala.version&#125;&lt;&#x2F;version&gt;</span><br><span class="line">    &lt;&#x2F;dependency&gt;</span><br><span class="line">  </span><br><span class="line">    &lt;dependency&gt;</span><br><span class="line">        &lt;groupId&gt;org.apache.flink&lt;&#x2F;groupId&gt;</span><br><span class="line">        &lt;artifactId&gt;flink-clients&lt;&#x2F;artifactId&gt;</span><br><span class="line">        &lt;version&gt;$&#123;flink.version&#125;&lt;&#x2F;version&gt;</span><br><span class="line">        &lt;!--&lt;scope&gt;provided&lt;&#x2F;scope&gt;--&gt;</span><br><span class="line">    &lt;&#x2F;dependency&gt;</span><br><span class="line">  </span><br><span class="line">    &lt;dependency&gt;</span><br><span class="line">        &lt;groupId&gt;org.apache.flink&lt;&#x2F;groupId&gt;</span><br><span class="line">        &lt;artifactId&gt;flink-runtime&lt;&#x2F;artifactId&gt;</span><br><span class="line">        &lt;version&gt;$&#123;flink.version&#125;&lt;&#x2F;version&gt;</span><br><span class="line">        &lt;!--&lt;scope&gt;provided&lt;&#x2F;scope&gt;--&gt;</span><br><span class="line">    &lt;&#x2F;dependency&gt;</span><br><span class="line">  </span><br><span class="line">    &lt;dependency&gt;</span><br><span class="line">        &lt;groupId&gt;org.apache.flink&lt;&#x2F;groupId&gt;</span><br><span class="line">        &lt;artifactId&gt;flink-runtime-web&lt;&#x2F;artifactId&gt;</span><br><span class="line">        &lt;version&gt;$&#123;flink.version&#125;&lt;&#x2F;version&gt;</span><br><span class="line">        &lt;!--&lt;scope&gt;provided&lt;&#x2F;scope&gt;--&gt;</span><br><span class="line">    &lt;&#x2F;dependency&gt;</span><br><span class="line">&lt;dependencies&gt;</span><br></pre></td></tr></table></figure>
-<p>除了添加Flink依赖之外，我们还添加了junit单元测试、lombok快捷工具、scala语言包</p>
-<p>下面就开始我们的Flink自建版本本地Local MiniCluster的单元测试吧<br>新建一个名为FlinkFrameworkTest的Java类，然后添加如下代码:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">private static final StreamExecutionEnvironment streamExecutionEnvironment;</span><br><span class="line">  </span><br><span class="line">static &#123;</span><br><span class="line">    Configuration configuration &#x3D; new Configuration();</span><br><span class="line">    configuration.set(CoreOptions.DEFAULT_PARALLELISM, 1);</span><br><span class="line">    configuration.setInteger(ConfigConstants.LOCAL_NUMBER_TASK_MANAGER, 1);</span><br><span class="line">    configuration.set(TaskManagerOptions.NUM_TASK_SLOTS, 1);</span><br><span class="line">  </span><br><span class="line">    streamExecutionEnvironment &#x3D; StreamExecutionEnvironment.createLocalEnvironmentWithWebUI(configuration);</span><br><span class="line">&#125;</span><br><span class="line">  </span><br><span class="line">@Test</span><br><span class="line">public void testFlinkHelloWorld() throws Exception &#123;</span><br><span class="line">    DataStreamSource&lt;String&gt; lines &#x3D; streamExecutionEnvironment.socketTextStream(&quot;localhost&quot;, 8080);</span><br><span class="line">    lines.print();</span><br><span class="line">  </span><br><span class="line">    streamExecutionEnvironment.execute();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>HelloWorld程序很简单，使用静态代码块创建Flink的流式执行环境StreamExecutionEnvironment，然后从本地的8080网络端口读取Socket链接数据并进行输出，最后是使用执行环境执行流式应用程序<br>其中执行环境我们通过Configuration类配置了只有一个并行度，一个TaskManager，每个TaskManager只有一个Slot<br>由于我们使用了带有Flink WebUI的流式执行环境，所以需要 flink-runtime-web 依赖</p>
-<p>由以上的HelloWorld可以看出，Flink的流式应用编程三步曲</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">1) 创建流式执行环境StreamExecutionEnvironment</span><br><span class="line">2) 基于StreamExecutionEnvironment执行环境进行DataStream的算子操作(包括Source、Transformation、Sink)</span><br><span class="line">3) 使用StreamExecutionEnvironment执行环境执行程序</span><br></pre></td></tr></table></figure>
-<p>本例子中只有Source与Sink，其实Source与Sink操作本质也是Transaformation操作，但更多与外部系统或集合交互</p>
-<p>接下来我们运行一下HelloWorld例子<br>先通过nc程序打开8080网络端口</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nc -lk 8080</span><br></pre></td></tr></table></figure>
-<p><img src="http://coderap.gitee.io/blog-images/flink-in-depth/2-flink-nc-open-8080.png?0.6555255389435986" alt=""></p>
-<p>然后点击单元测试运行HelloWorld单元测试<br><img src="http://coderap.gitee.io/blog-images/flink-in-depth/2-flink-helloworld-test-runup.png?0.3318034293559209" alt=""><br>可以看到我们的HelloWorld已经创建了本地Local MiniCluster集群并运行了起来</p>
-<p>通过浏览器找开 <a href="http://localhost:8081" target="_blank" rel="noopener">http://localhost:8081</a> 页面(8081端口是Flink WebUI的默认端口)<br><img src="http://coderap.gitee.io/blog-images/flink-in-depth/2-flink-helloworld-flink-webui.png?0.8841030678986064" alt=""><br>从Flink WebUI概览图上，我们可以看出目前集群的配置是只有一个TaskManager，只有一个Slot，与我们代码里Configuration的配置一致，同时只有一个Job在运行，就是我们的HelloWorld程序，这个程序使用了默认的名称，叫做Flink Streaming Job</p>
-<p>我们点击 Flink Streaming Job 这个程序名称，就可以打开正在运行的HelloWorld的算子流图<br><img src="http://coderap.gitee.io/blog-images/flink-in-depth/2-flink-custom-helloworld-flinkwebui-streamgraph.png?0.5274267427752113" alt=""><br>从流图中我们可以看出目前有一个Souce为Socket Stream，一个Sink为Print to Std. Out，与我们的代码一致</p>
-<p>我们通过nc程序输入数据看一下效果<br><img src="http://coderap.gitee.io/blog-images/flink-in-depth/2-flink-helloworld-input-output-data.png?0.58919321909442" alt=""><br>我们输入什么控制台上就输出什么</p>
-<p>以上就是我们使用自建Flink版本进行的HelloWorld流式程序测试</p>
+<h3 id="带有Transformation的HelloWorld程序"><a href="#带有Transformation的HelloWorld程序" class="headerlink" title="带有Transformation的HelloWorld程序"></a>带有Transformation的HelloWorld程序</h3><p>我们在上一篇文章的基础上增加一个MapFunction的算子操作，并运行起来</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">@Test</span><br><span class="line">public void testFlinkHelloWorld2() throws Exception &#123;</span><br><span class="line">    DataStreamSource&lt;String&gt; lines &#x3D; streamExecutionEnvironment.socketTextStream(&quot;localhost&quot;, 8080);</span><br><span class="line">  </span><br><span class="line">    SingleOutputStreamOperator&lt;Long&gt; map &#x3D; lines.map(((line -&gt; Long.parseLong(line))));</span><br><span class="line">  </span><br><span class="line">    map.print();</span><br><span class="line">  </span><br><span class="line">    streamExecutionEnvironment.execute();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>该流式HelloWorld程序主要是从8080网络端口读取数据，并通过MapFunction算子操作把字符串数据转换成Long型数据，最后输出</p>
+<p>我们看一下的算子流图长什么样子<br><img src="http://coderap.gitee.io/blog-images/flink-in-depth/3-flink-helloworld-mapfunction-webui-streamgraph.png?0.9082776159939208" alt=""><br>可以看出，该算子流图与我们的代码一一对应，通过Source进行了Map的Transformation转换，然后通过Sink输出结果</p>
+<p>那么Source、Transformation、Sink到底是什么?</p>
+<h3 id="Flink编程模型"><a href="#Flink编程模型" class="headerlink" title="Flink编程模型"></a>Flink编程模型</h3><p>正如上一篇文章说的Flink的应用程序编程无外呼三部曲<br><img src="http://coderap.gitee.io/blog-images/flink-in-depth/3-flink-programming-model-official.png?0.460597799090704" alt=""><br>图片官网连接: <a href="https://nightlies.apache.org/flink/flink-docs-master/docs/learn-flink/overview" target="_blank" rel="noopener">https://nightlies.apache.org/flink/flink-docs-master/docs/learn-flink/overview</a></p>
+<p>简单来说就是通过Source、Transformation、Sink等算子表示的Transformation之间的转换，最终在API层面的表现就是DataStream之间的转换</p>
+<p>那么我们具体看看Source、Transformation、Sink到底是什么<br>Source: 数据源，用于从集合或外部系统接入数据源，其本质是实现SourceFunction被Operator封装并组成的Transformation(源码)<br>Transformation: 数据转换的各种操作，可以将数据转换计算成你想要的数据，其本质是一系统被Operator封装的ProcessFunction并组成的Transformation(源码)<br>Sink: 接收器，将转换计算后的数据发送到控制台或输入到外部系统，其本质是实现SinkFunction被Operaotr封装并组成的Transformation(源码)<br>虽然在源码层面Source、Tranforamtion和Sink都是Transformation，但为了概念不混淆，对外声明上我们还是按照Souce、Transformation和Sink来加以区别，毕竟Source与Sink与普通的正常的Transformation实现还是有自己的不同之处</p>
+<h3 id="Fink-Source"><a href="#Fink-Source" class="headerlink" title="Fink Source"></a>Fink Source</h3><p>那么Flink的Source有哪些类型呢? 总体上可以分为内置的Source与自定义的Source，但本质上都是直接或间隔调用StreamExecutionEnvironment类的addSource方法、实现了SourceFunction并被Operator所封装再组成的Transformation、最后对外提供使用的DataStreamSource<br>内置的Flink的Source主要有:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">1) fromElements(...): 来自元素集合</span><br><span class="line">2) fromCollection(...): 来自集合数据</span><br><span class="line">3) fromParallelCollection(...): 来自并行集合数据</span><br><span class="line">4) readTextFile(...)&#x2F;readFile(...)&#x2F;readFileStream(...): 来自文件</span><br><span class="line">5) socketTextStream(...): 来自文本网络流</span><br><span class="line">6) createInput(...)&#x2F;createFileInput(...): 来自支持InputSplit的InputFormat类型，例如flink-connector-jdbc的JdbcRowDataInputFormat</span><br></pre></td></tr></table></figure>
+<p>从并发的角度看，Flink的Source有两种实现方法，一种是不支持并发，例如socketTextStream，另一种是支持并发，例如Kafka的多分区形式，具体源码实现可以参考后文</p>
+<p>Flink Source背后的Transformation主要是 LegacySourceTransformation 与 SourceTransformation</p>
+<h3 id="Flink-Transformation"><a href="#Flink-Transformation" class="headerlink" title="Flink Transformation"></a>Flink Transformation</h3><p>Flink的Transformation种类繁多，主要是基于DataStream或KeyedStream(本质也是DataStream但提供更丰富的keyBy后的算子操作类型)<br>具体有以下这些:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">1) Map: 最简单的转换之一，一对一处理，输入是一条数据流数据，输出的也是一条数据流数据</span><br><span class="line">2) FlatMap: 一对多处理，输入一条数据流数据，输出0条或多条数据流数据</span><br><span class="line">3) Filter: 对数据流数据进行过滤操作，符合条件的数据流数据输向下游，不符合条件的则过滤条不给下游流处理</span><br><span class="line">4) KeyBy: 基于 key 对流进行分区，分区操作有多种类型，分区函数也有多种</span><br><span class="line">5) Reduce: 对数据流作聚合操作汇总出一条数据流数据，常用的 average&#x2F;sum&#x2F;min&#x2F;max&#x2F;count 等方法都可使用 reduce 可实现</span><br><span class="line">6) Window: 允许按横切的时间或数据流条数对 KeyedStream 进行分组聚合统计并输出汇总数据流</span><br><span class="line">7) WindowAll: 在非分区数据流上进行Window操作</span><br><span class="line">8) Union: 将两个或多个数据流组合在一起再进行算子操作</span><br><span class="line">9) Window Join: 根据 key 分区将同一个 window 的两个数据流 Join 起来</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+<p>具体链接可以参考官网: <a href="https://nightlies.apache.org/flink/flink-docs-master/docs/dev/datastream/operators/overview" target="_blank" rel="noopener">https://nightlies.apache.org/flink/flink-docs-master/docs/dev/datastream/operators/overview</a></p>
+<h3 id="Flink-Sink"><a href="#Flink-Sink" class="headerlink" title="Flink Sink"></a>Flink Sink</h3><p>Flink的Sink主要向外部系统输出数据，内置的Sink种类不多，都是通过DataStream操作并返回DataStreamSink，主要有:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">1) print(): 最常用的，用于向控制台输出，一般用于单元测试或调试程序等</span><br><span class="line">2) writeAsText(...): 写出成文本文件</span><br><span class="line">3) writeAsCsv(...): 写出成Csv文件</span><br><span class="line">4) writeToSocket(...): 向网络流输出数据</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+<p><img src="http://coderap.gitee.io/blog-images/flink-in-depth/3-flink-sink-api.png?0.5825320520921318" alt=""></p>
+<p>Flink Sink背后的Transformation主要是 LegacySinkTransformation 与 SinkTransformation</p>
+<h3 id="查看Flink的Transformation是怎么进行数据转换操作并判断数据流数据是否向下游输出的"><a href="#查看Flink的Transformation是怎么进行数据转换操作并判断数据流数据是否向下游输出的" class="headerlink" title="查看Flink的Transformation是怎么进行数据转换操作并判断数据流数据是否向下游输出的"></a>查看Flink的Transformation是怎么进行数据转换操作并判断数据流数据是否向下游输出的</h3><p>新的HelloWorld的FlatMap流式应用程序如下:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">@Test</span><br><span class="line">public void testFlinkHelloWorld3() throws Exception &#123;</span><br><span class="line">    DataStreamSource&lt;String&gt; lines &#x3D; streamExecutionEnvironment.socketTextStream(&quot;localhost&quot;, 8080);</span><br><span class="line">  </span><br><span class="line">    SingleOutputStreamOperator&lt;String&gt; flatMap &#x3D; lines.flatMap(new FlatMapFunction&lt;String, String&gt;() &#123;</span><br><span class="line">        @Override</span><br><span class="line">        public void flatMap(String value, Collector&lt;String&gt; out) throws Exception &#123;</span><br><span class="line">            if (value.contains(&quot;,&quot;)) &#123;</span><br><span class="line">                String[] values &#x3D; value.split(&quot;,&quot;);</span><br><span class="line">                for (String temp : values) &#123;</span><br><span class="line">                    out.collect(temp);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125; else &#123;</span><br><span class="line">                out.collect(value);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;);</span><br><span class="line">  </span><br><span class="line">    flatMap.print();</span><br><span class="line">  </span><br><span class="line">    streamExecutionEnvironment.execute();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>程序很简单，就是控制台中输入的字符串中如果含有逗号的，则拆分成多条字符串并向下游输出多条数据，如果没有则原封不动的向下游输出数据<br><img src="http://coderap.gitee.io/blog-images/flink-in-depth/3-flink-flatmap-operation.png?0.8669739054660035" alt=""></p>
 <br/>
 <center>欢迎大家关注</center>
 <center>
 <img src="http://coderap.gitee.io/images/logo/public-wechat-qrcode-8.jpg"/>
 </center>
-
-
-
-
 
 
       
@@ -386,7 +384,7 @@
     
     <li class="post-copyright-link hidden-xs">
       <strong>本文链接：</strong>
-      <a href="https://coderap.gitee.io/flink-in-depth/articles/flink-in-depth/2.flink-source-custom-test/" title="从0到1成为Flink源码Contributor之自建版本HelloWorld测试(2)" target="_blank" rel="external">https://coderap.gitee.io/flink-in-depth/articles/flink-in-depth/2.flink-source-custom-test/</a>
+      <a href="https://coderap.gitee.io/flink-in-depth/articles/flink-in-depth/3.flink-programming-model/" title="从0到1成为Flink源码Contributor之Flink编程模型(3)" target="_blank" rel="external">https://coderap.gitee.io/flink-in-depth/articles/flink-in-depth/3.flink-programming-model/</a>
     </li>
     
     <li class="post-copyright-license">
@@ -432,13 +430,9 @@
   
   <ul class="pager pull-left">
     
-    <li class="prev">
-      <a href="/flink-in-depth/articles/flink-in-depth/3.flink-programming-model/" title="从0到1成为Flink源码Contributor之Flink编程模型(3)"><i class="icon icon-angle-left" aria-hidden="true"></i><span>&nbsp;&nbsp;上一篇</span></a>
-    </li>
-    
     
     <li class="next">
-      <a href="/flink-in-depth/articles/flink-in-depth/1.flink-source-setup/" title="从0到1成为Flink源码Contributor之环境搭建(1)"><span>下一篇&nbsp;&nbsp;</span><i class="icon icon-angle-right" aria-hidden="true"></i></a>
+      <a href="/flink-in-depth/articles/flink-in-depth/2.flink-source-custom-test/" title="从0到1成为Flink源码Contributor之自建版本HelloWorld测试(2)"><span>下一篇&nbsp;&nbsp;</span><i class="icon icon-angle-right" aria-hidden="true"></i></a>
     </li>
     
     
